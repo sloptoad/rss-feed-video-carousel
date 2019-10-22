@@ -219,7 +219,7 @@
     `;
 
   window.top.document.head.appendChild(style);
-  var feedimgs = [ "http://api.billboard.com/files/media/lunay-jimmy-kimmel-2019-billboard-embed.jpg","http://api.billboard.com/files/media/lunay-jimmy-kimmel-2019-billboard-embed.jpg"];
+  var feedimgs = [ "http://api.billboard.com/files/media/lunay-jimmy-kimmel-2019-billboard-embed.jpg","http://api.billboard.com/files/media/lunay-jimmy-kimmel-2019-billboard-embed.jpg","http://api.billboard.com/files/media/lunay-jimmy-kimmel-2019-billboard-embed.jpg","http://api.billboard.com/files/media/lunay-jimmy-kimmel-2019-billboard-embed.jpg","http://api.billboard.com/files/media/lunay-jimmy-kimmel-2019-billboard-embed.jpg"];
     var titles = [];
     var firsttitle = "";
     var urls = []
@@ -229,7 +229,6 @@
             dataType: 'jsonp',
             success: function (result) {
                 for (let item in result.items) {
-                	            console.log(result.items + "hihi")
                     if (result.items[item].thumbnail !== "") {
                         feedimgs.push(result.items[item].thumbnail)
                     }
@@ -262,13 +261,14 @@
                 <div class="white-block"></div>
                 <div id="read-more"></div>
                 `
+                var titleDiv = window.top.document.getElementById("slide-title");
 
                 for (image in feedimgs) {
                   var newli = window.top.document.createElement("li");
                 	if( image == 0){
                      $(newli).addClass("showing");
                     firsttitle = titles[0];
-                    console.log({firsttitle})
+                    titleDiv.innerHTML = firsttitle
                 	}
                     var outerDiv = window.top.document.createElement("div");
                      $(newli).addClass("zlide");
@@ -283,14 +283,12 @@
 			var zlides = window.top.document.querySelectorAll('.zlides .zlide');
       var currentZlide = 0;
       var x = window.top.document.getElementById("top-article").lastElementChild;
-      var titleDiv = window.top.document.getElementById("slide-title");
       var readMoreDiv = window.top.document.getElementById("read-more");
 
       setInterval(nextZlide,5000);
       console.log({urls})
           function nextZlide() {
                 if(currentZlide == 0) {
-                  debugger;
                     window.top.document.getElementById("pbar-0").classList.remove("filled");
                     window.top.document.getElementById("pbar-1").classList.remove("filled");
                     window.top.document.getElementById("pbar-2").classList.remove("filled");
