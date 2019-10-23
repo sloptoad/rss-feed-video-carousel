@@ -3,6 +3,10 @@
 <script>
   var style = window.top.document.createElement('style');
   style.innerHTML = `
+  a{
+    color: ff6567;
+    text-decoration: none;
+  }
 .zlides {
     position: relative;
     height: 500px;
@@ -299,14 +303,14 @@
                     window.top.document.getElementById("progress-3").classList.add("not-filled");
                     window.top.document.getElementById("progress-4").classList.add("not-filled");
                     x.innerHTML = `1/5`
-                    titleDiv.innerHTML = firsttitle;
+                    titleDiv.innerHTML = '<a target="_blank" href="'+urls[0]+'">'+firsttitle+'</a>';
                     readMoreDiv.innerHTML = '<a target="_blank" href="'+urls[0]+'">Read More >></a>'
                 }
                 if(currentZlide == 1){
                     window.top.document.getElementById("progress-1").classList.remove("not-filled");
                     window.top.document.getElementById("pbar-0").classList.add('filled')    
                     x.innerHTML = `2/5`
-                    titleDiv.innerHTML = titles[1];
+                    titleDiv.innerHTML = '<a target="_blank" href="'+urls[1]+'">'+ titles[1]+'</a>';
                     readMoreDiv.innerHTML = '<a href="'+urls[1]+'">Read More >></a>'
 
                 }
@@ -314,7 +318,7 @@
                     window.top.document.getElementById("progress-2").classList.remove("not-filled");
                     window.top.document.getElementById("pbar-1").classList.add('filled')    
                     x.innerHTML = `3/5`
-                    titleDiv.innerHTML = titles[2];
+                    titleDiv.innerHTML = '<a target="_blank" href="'+urls[2]+'">'+ titles[2]+'</a>';
                     readMoreDiv.innerHTML = '<a href="'+urls[2]+'">Read More >></a>'
 
                 }                
@@ -322,7 +326,7 @@
                     window.top.document.getElementById("progress-3").classList.remove("not-filled");
                     window.top.document.getElementById("pbar-2").classList.add('filled')   
                     x.innerHTML = `4/5`
-                    titleDiv.innerHTML = titles[3];
+                    titleDiv.innerHTML = '<a target="_blank" href="'+urls[3]+'">'+ titles[3]+'</a>';
                     readMoreDiv.innerHTML = '<a href="'+urls[3]+'">Read More >></a>'
 
                 }
@@ -330,7 +334,7 @@
                     window.top.document.getElementById("progress-4").classList.remove("not-filled");
                     window.top.document.getElementById("pbar-3").classList.add('filled')    
                     x.innerHTML = `5/5`
-                    titleDiv.innerHTML = titles[4];
+                    titleDiv.innerHTML = '<a target="_blank" href="'+urls[4]+'">'+ titles[4]+'</a>';
                     readMoreDiv.innerHTML = '<a href="'+urls[4]+'">Read More >></a>'
 
                 }
