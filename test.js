@@ -1,19 +1,22 @@
 // <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
 <script>
   var style = window.top.document.createElement('style');
   style.innerHTML = `
   a{
-    color: ff6567;
+    color: #000;
+  }
+  a:hover{
+    color: #ff6567;
     text-decoration: none;
   }
 .zlides {
     position: relative;
-    height: 500px;
+    height: 369px;
     padding: 0px;
     margin: 0px;
     list-style-type: none;
     overflow:hidden;
+    display:grid;
 }
 .zlide {
     position: absolute;
@@ -28,7 +31,16 @@
     -o-transition: opacity 1s;
     transition: opacity 1s;
 }
-
+.bc-video-add {
+    position:absolute;
+    top:0px;
+    right:0px;
+    bottom:0px;
+    left:0px;
+    width:100%;
+    height:200px;
+    z-index:99999999;
+}
 
 #slide-title{
   z-index: 99999;
@@ -37,8 +49,10 @@
   border-left: 5px solid #ff6567;
   left: 25px;
   font-size: 20px;
-  height: 75px;
+  max-height: 75px;
   bottom: 25px;
+  display: flex;
+  align-items: center;
   line-height: 25px;
   max-width: 478px;
   padding: 10px 5px;
@@ -103,7 +117,6 @@
   }
 }
 
-
 @-webkit-keyframes loader {
   0% {
     width: 0;
@@ -136,8 +149,8 @@
   }
 
 [id^=progress]{
-  -webkit-animation: loader 5s ease infinite;
-          animation: loader 5s ease infinite;
+  -webkit-animation: loader 5s linear infinite;
+          animation: loader 5s linear infinite;
   background: #ff6567;
   color: #fff;
   padding: 2px;
@@ -148,7 +161,7 @@
   left: 50%;
   max-width: 100%;
   width: 550px;
-  top: 72%;
+  top: 68%;
   -webkit-transform: translate3d(-50%, -50%, 0);
           transform: translate3d(-50%, -50%, 0);
 }
@@ -197,33 +210,43 @@
 /* For mobile : like samsung grand(480 * 800): */
 @media screen and (max-width : 480px){
   .zlides{
-    height: 355px;
+    height: 200px;
   }
   .progress-bar{
     display: none;
   }
   #slide-title{
-    max-width: 90%;
+    max-width: 89%;
     left: 8px;
-    bottom: 44px;
-    font-size:16px;
-    line-height: 23px;
-    height: 72px;
+    bottom: 21px;
+    font-size: 14px;
+    line-height: 20px;
+  }
+  #read-more{
+    top: 88%;
   }
 }
-
-
-/* For iphone: */
-@media screen and (max-width : 320px){} 
-
-
-/* For ipad: */
-@media screen and (max-width : 768px){} 
-
     `;
 
+    (function(d, script) {
+    script = d.createElement('script');
+    script.type = 'text/javascript';
+    script.async = true;
+    script.onload = function(){
+      player = window.top.document.getElementById("rss-video-ad");
+      player2 = window.top.document.getElementsByClassName("bc-video-add");
+      window.top.bc("rss-video-ad").on('ads-ad-ended', () => {
+        player.parentNode.removeChild(player)
+        player2[0].parentNode.removeChild(player2[0])
+
+      })
+    };
+    script.src = 'https://players.brightcove.net/1125911414/7BrHKSTrsI_default/index.min.js?playlistId=5769553016001';
+    d.getElementsByTagName('head')[0].appendChild(script);
+}(window.top.document));
+
   window.top.document.head.appendChild(style);
-  var feedimgs = [ "http://api.billboard.com/files/media/lunay-jimmy-kimmel-2019-billboard-embed.jpg","http://api.billboard.com/files/media/lunay-jimmy-kimmel-2019-billboard-embed.jpg","http://api.billboard.com/files/media/lunay-jimmy-kimmel-2019-billboard-embed.jpg","http://api.billboard.com/files/media/lunay-jimmy-kimmel-2019-billboard-embed.jpg","http://api.billboard.com/files/media/lunay-jimmy-kimmel-2019-billboard-embed.jpg"];
+  var feedimgs = ["http://api.billboard.com/files/media/akon-El-Negreeto-2019-billboard-embed.jpg","http://api.billboard.com/files/media/lunay-jimmy-kimmel-2019-billboard-embed.jpg","http://api.billboard.com/files/media/akon-El-Negreeto-2019-billboard-embed.jpg","http://api.billboard.com/files/media/lunay-jimmy-kimmel-2019-billboard-embed.jpg","http://api.billboard.com/files/media/akon-El-Negreeto-2019-billboard-embed.jpg"];
     var titles = [];
     var firsttitle = "";
     var urls = []
@@ -245,12 +268,24 @@
                 }
             var currentDiv = window.top.document.getElementById("m1_1"),
                 zlidesdiv = window.top.document.getElementsByClassName("zlides");
-            if (currentDiv != undefined || currentDiv != null && zlidesdiv.length === 0 ) {
-            	console.log("testtest");
+            if ( zlidesdiv.length == 0 ) {
                 var newDiv = window.top.document.createElement("div");
                 $(newDiv).addClass("zlides");
                 currentDiv.append(newDiv);
                 newDiv.innerHTML = `
+                <div class="bc-video-add" style="position:absolute;top:0px;right:0px;bottom:0px;left:0px;width:100%;height:200px;z-index:99999999">
+                <video-js autoplay
+                  data-account="1125911414"
+                  data-player="7BrHKSTrsI"
+                  data-embed="default"
+                  data-playlist-id="5769553016001"
+                  controls=""
+                  id="rss-video-ad"
+                  data-application-id=""
+                  class="vjs-fluid"></video-js>
+                </div>
+
+
                 <div id="top-article">
                 <span>TOP ARTICLES</span><span>1/5</span>
                 </div>
@@ -283,15 +318,16 @@
                 }
   
             }
-
+      var player = window.top.document.getElementById("rss-video-ad");
 			var zlides = window.top.document.querySelectorAll('.zlides .zlide');
       var currentZlide = 0;
       var x = window.top.document.getElementById("top-article").lastElementChild;
       var readMoreDiv = window.top.document.getElementById("read-more");
 
       setInterval(nextZlide,5000);
-      console.log({urls})
+      setInterval(reAddVideo,25000);
           function nextZlide() {
+            var titleDiv = window.top.document.getElementById("slide-title");
                 if(currentZlide == 0) {
                     window.top.document.getElementById("pbar-0").classList.remove("filled");
                     window.top.document.getElementById("pbar-1").classList.remove("filled");
@@ -342,11 +378,47 @@
               currentZlide = (currentZlide+1)%zlides.length;
               zlides[currentZlide].className = 'zlide showing';
           }
+          function reAddVideo(){
+            var checkDiv = window.top.document.getElementsByClassName("bc-video-add");
+            if(checkDiv.length == 0){
+              zlidesdiv = window.top.document.getElementsByClassName("zlides");
+              (function(d, script) {
+                script = d.createElement('script');
+                script.type = 'text/javascript';
+                script.async = true;
+                script.onload = function(){
+                  player = window.top.document.getElementById("rss-video-ad");
+                  player2 = window.top.document.getElementsByClassName("bc-video-add");
+                  window.top.bc("rss-video-ad").on('ads-ad-ended', () => {
+                    player.parentNode.removeChild(player)
+                    player2[0].parentNode.removeChild(player2[0])
+            
+                  })
+                };
+                script.src = 'https://players.brightcove.net/1125911414/7BrHKSTrsI_default/index.min.js?playlistId=5769553016001';
+                d.getElementsByTagName('head')[0].appendChild(script);
+            }(window.top.document));
+              var playerHtml = window.top.document.createElement("div");
+              $(playerHtml).addClass("bc-video-add");
+                  playerHtml.innerHTML = `<video-js autoplay
+                        data-account="1125911414"
+                        data-player="7BrHKSTrsI"
+                        data-embed="default"
+                        data-playlist-id="5769553016001"
+                        controls=""
+                        id="rss-video-ad"
+                        data-application-id=""
+                        class="vjs-fluid">
+                      </video-js>`
+              zlidesdiv[0].append(playerHtml)
+              var player = window.top.document.getElementById("rss-video-ad");
+          }
         }
+      }
       })
 
-   
 
+   
 </script>	
 
 <img src="%%VIEW_URL_UNESC%%%%CLICK_URL_UNESC%%" style="display:none">
