@@ -49,15 +49,51 @@
   border-left: 5px solid #ff6567;
   left: 25px;
   font-size: 20px;
-  max-height: 75px;
+  height: 75px;
   bottom: 25px;
   display: flex;
   align-items: center;
   line-height: 25px;
-  max-width: 478px;
+  width: 478px;
   padding: 10px 5px;
   }
 
+#slide-title span {
+  margin-left:-355px;
+  animation: slidein 2.5s ease;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  max-width: 478px;
+}
+#slide-title span a {
+  animation: slideintext 3s linear;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+.connatix{
+  display: none !important;
+}
+
+{/* @-webkit-keyframes showup {
+    0% {opacity:0;}
+    20% {opacity:1;}
+    80% {opacity:1;}
+    100% {opacity:0;}
+} */}
+
+@-webkit-keyframes slidein {
+    0% { margin-left:-500px; }
+    35% { margin-left:-500px; }
+    55% { margin-left:0px; }
+    100% { margin-left:0px; }
+}
+@-webkit-keyframes slideintext {
+    0% { color: rgba(0, 0, 0, 0.0); }
+    35% { color: rgba(0, 0, 0, 0.0); }
+    65% { color: rgba(0, 0, 0, 1.0); }
+    95% { color:rgba(0, 0, 0, 1.0); }
+    100% { color: rgba(0, 0, 0, 1.0); }
+}
   #read-more{
     max-width: 100%;
     z-index: 99999;
@@ -151,6 +187,7 @@
 [id^=progress]{
   -webkit-animation: loader 5s linear infinite;
           animation: loader 5s linear infinite;
+          -webkit-transform-style: preserve-3d;
   background: #ff6567;
   color: #fff;
   padding: 2px;
@@ -218,7 +255,8 @@
   #slide-title{
     max-width: 89%;
     left: 8px;
-    bottom: 21px;
+    height: 56px;
+    bottom: 19px;
     font-size: 14px;
     line-height: 20px;
   }
@@ -233,11 +271,11 @@
     script.type = 'text/javascript';
     script.async = true;
     script.onload = function(){
-      player = window.top.document.getElementById("rss-video-ad");
-      player2 = window.top.document.getElementsByClassName("bc-video-add");
+      adPlayer = window.top.document.getElementById("rss-video-ad");
+      vidPlayer = window.top.document.getElementsByClassName("bc-video-add");
       window.top.bc("rss-video-ad").on('ads-ad-ended', () => {
-        player.parentNode.removeChild(player)
-        player2[0].parentNode.removeChild(player2[0])
+        adPlayer.parentNode.removeChild(adPlayer)
+        vidPlayer[0].parentNode.removeChild(vidPlayer[0])
 
       })
     };
@@ -246,32 +284,35 @@
 }(window.top.document));
 
   window.top.document.head.appendChild(style);
-  var feedimgs = ["http://api.billboard.com/files/media/akon-El-Negreeto-2019-billboard-embed.jpg","http://api.billboard.com/files/media/lunay-jimmy-kimmel-2019-billboard-embed.jpg","http://api.billboard.com/files/media/akon-El-Negreeto-2019-billboard-embed.jpg","http://api.billboard.com/files/media/lunay-jimmy-kimmel-2019-billboard-embed.jpg","http://api.billboard.com/files/media/akon-El-Negreeto-2019-billboard-embed.jpg"];
-    var titles = [];
+  var feedimgs = ["https://www.billboard.com/files/media/03-Post-Malone-press-by-Adam-Degross-2019-billboard-1548.jpg","https://www.billboard.com/files/media/04-Selena-Gomez-Lose-You-To-Love-Me-billboard-1548.jpg","https://www.billboard.com/files/media/Cole-Swindell-CMA-music-festival-portraits-cr-Eric-Ryan-Anderson-2017-billboard-1548.jpg","https://www.billboard.com/files/media/tones-and-i-2019-cr-elektra-records-billboard-1548.jpg","https://www.billboard.com/files/media/Super-Junior-press-photo-2019-billboard-1548.jpg"];
+    var titles = ["Five Burning Questions: Billboard Staffers Discuss Selena Gomez's Resounding 'Lose You to Love Me' Debut","Cole Swindell Swipes No. 1 Spot On Country Airplay Chart With 'Love You Too Late'","Stereophonics, Tones And I Lead U.K. Midweek Charts","Super Junior Return to Top 10 of World Albums Chart With 'Time_Slip'","Post Malone Rules Artist 100 For 11th Week, Selena Gomez Returns in Top 20"];
     var firsttitle = "";
-    var urls = []
+    var urls = ["https://www.billboard.com/articles/business/chart-beat/8541300/selena-gomez-lose-you-to-love-me-five-burning-questions","https://www.billboard.com/articles/business/chart-beat/8541259/love-you-too-late-cole-swindell-tops-country-airplay","https://www.billboard.com/articles/business/chart-beat/8541210/stereophonics-tones-and-i-lead-uk-midweek-charts","https://www.billboard.com/articles/business/chart-beat/8541166/super-junior-time-slip-top-10-world-albums-chart","https://www.billboard.com/articles/business/chart-beat/8541485/selena-gomez-returns-artist-100-chart"]
           $.ajax({
             type: 'GET',
-            url: "https://api.rss2json.com/v1/api.json?rss_url=https://minutemedia:1bf80493@synd.bbthr.com/get/minutemedia/bb-minutemedia-programmatic-1",
+            url: "http://517.syndication.dev.billboard.com/get/microsoft/microsoft-bb-news",
             dataType: 'jsonp',
+            crossDomain: true,
+            headers: {"Access-Control-Allow-Origin": "*"},
             success: function (result) {
+              console.log({result})
                 for (let item in result.items) {
                     if (result.items[item].thumbnail !== "") {
-                        feedimgs.push(result.items[item].thumbnail)
+                        // feedimgs.push(result.items[item].thumbnail)
                     }
                     if (result.items[item].title !== "") {
-                        titles.push(result.items[item].title)
+                        // titles.push(result.items[item].title)
                     }
                     if (result.items[item].link !== "") {
-                      urls.push(result.items[item].link)
+                      // urls.push(result.items[item].link)
                   }
                 }
-            var currentDiv = window.top.document.getElementById("m1_1"),
+            var adDiv = window.top.document.getElementById("m1_1"),
                 zlidesdiv = window.top.document.getElementsByClassName("zlides");
             if ( zlidesdiv.length == 0 ) {
                 var newDiv = window.top.document.createElement("div");
                 $(newDiv).addClass("zlides");
-                currentDiv.append(newDiv);
+                adDiv.append(newDiv);
                 newDiv.innerHTML = `
                 <div class="bc-video-add" style="position:absolute;top:0px;right:0px;bottom:0px;left:0px;width:100%;height:200px;z-index:99999999">
                 <video-js autoplay
@@ -284,7 +325,6 @@
                   data-application-id=""
                   class="vjs-fluid"></video-js>
                 </div>
-
 
                 <div id="top-article">
                 <span>TOP ARTICLES</span><span>1/5</span>
@@ -321,11 +361,11 @@
       var player = window.top.document.getElementById("rss-video-ad");
 			var zlides = window.top.document.querySelectorAll('.zlides .zlide');
       var currentZlide = 0;
-      var x = window.top.document.getElementById("top-article").lastElementChild;
+      var topArticle = window.top.document.getElementById("top-article").lastElementChild;
       var readMoreDiv = window.top.document.getElementById("read-more");
 
       setInterval(nextZlide,5000);
-      setInterval(reAddVideo,25000);
+      setInterval(reAddVideo,30000);
           function nextZlide() {
             var titleDiv = window.top.document.getElementById("slide-title");
                 if(currentZlide == 0) {
@@ -338,40 +378,40 @@
                     window.top.document.getElementById("progress-2").classList.add("not-filled");
                     window.top.document.getElementById("progress-3").classList.add("not-filled");
                     window.top.document.getElementById("progress-4").classList.add("not-filled");
-                    x.innerHTML = `1/5`
-                    titleDiv.innerHTML = '<a target="_blank" href="'+urls[0]+'">'+firsttitle+'</a>';
+                    topArticle.innerHTML = `1/5`
+                    titleDiv.innerHTML = '<span><a target="_blank" href="'+urls[0]+'">'+titles[0]+'</a></span>';
                     readMoreDiv.innerHTML = '<a target="_blank" href="'+urls[0]+'">Read More >></a>'
                 }
                 if(currentZlide == 1){
                     window.top.document.getElementById("progress-1").classList.remove("not-filled");
                     window.top.document.getElementById("pbar-0").classList.add('filled')    
-                    x.innerHTML = `2/5`
-                    titleDiv.innerHTML = '<a target="_blank" href="'+urls[1]+'">'+ titles[1]+'</a>';
-                    readMoreDiv.innerHTML = '<a href="'+urls[1]+'">Read More >></a>'
+                    topArticle.innerHTML = `2/5`
+                    titleDiv.innerHTML = '<span><a target="_blank" href="'+urls[1]+'">'+ titles[1]+'</a></span>';
+                    readMoreDiv.innerHTML = '<a target="_blank" href="'+urls[1]+'">Read More >></a>'
 
                 }
                 if(currentZlide == 2){
                     window.top.document.getElementById("progress-2").classList.remove("not-filled");
                     window.top.document.getElementById("pbar-1").classList.add('filled')    
-                    x.innerHTML = `3/5`
-                    titleDiv.innerHTML = '<a target="_blank" href="'+urls[2]+'">'+ titles[2]+'</a>';
-                    readMoreDiv.innerHTML = '<a href="'+urls[2]+'">Read More >></a>'
+                    topArticle.innerHTML = `3/5`
+                    titleDiv.innerHTML = '<span><a target="_blank" href="'+urls[2]+'">'+ titles[2]+'</a></span>';
+                    readMoreDiv.innerHTML = '<a target="_blank" href="'+urls[2]+'">Read More >></a>'
 
                 }                
                 if(currentZlide == 3){
                     window.top.document.getElementById("progress-3").classList.remove("not-filled");
                     window.top.document.getElementById("pbar-2").classList.add('filled')   
-                    x.innerHTML = `4/5`
-                    titleDiv.innerHTML = '<a target="_blank" href="'+urls[3]+'">'+ titles[3]+'</a>';
-                    readMoreDiv.innerHTML = '<a href="'+urls[3]+'">Read More >></a>'
+                    topArticle.innerHTML = `4/5`
+                    titleDiv.innerHTML = '<span><a target="_blank" href="'+urls[3]+'">'+ titles[3]+'</a></span>';
+                    readMoreDiv.innerHTML = '<a target="_blank" href="'+urls[3]+'">Read More >></a>'
 
                 }
                 if(currentZlide == 4){
                     window.top.document.getElementById("progress-4").classList.remove("not-filled");
                     window.top.document.getElementById("pbar-3").classList.add('filled')    
-                    x.innerHTML = `5/5`
-                    titleDiv.innerHTML = '<a target="_blank" href="'+urls[4]+'">'+ titles[4]+'</a>';
-                    readMoreDiv.innerHTML = '<a href="'+urls[4]+'">Read More >></a>'
+                    topArticle.innerHTML = `5/5`
+                    titleDiv.innerHTML = '<span><a target="_blank" href="'+urls[4]+'">'+ titles[4]+'</a></span>';
+                    readMoreDiv.innerHTML = '<a target="_blank" href="'+urls[4]+'">Read More >></a>'
 
                 }
               zlides[currentZlide].className = 'zlide';
@@ -387,11 +427,11 @@
                 script.type = 'text/javascript';
                 script.async = true;
                 script.onload = function(){
-                  player = window.top.document.getElementById("rss-video-ad");
-                  player2 = window.top.document.getElementsByClassName("bc-video-add");
+                  adPlayer = window.top.document.getElementById("rss-video-ad");
+                  vidPlayer = window.top.document.getElementsByClassName("bc-video-add");
                   window.top.bc("rss-video-ad").on('ads-ad-ended', () => {
-                    player.parentNode.removeChild(player)
-                    player2[0].parentNode.removeChild(player2[0])
+                    adPlayer.parentNode.removeChild(adPlayer)
+                    vidPlayer[0].parentNode.removeChild(vidPlayer[0])
             
                   })
                 };
