@@ -290,21 +290,22 @@
     var urls = []
           $.ajax({
             type: 'GET',
+            dataType: "xml",
             url: "https://syndication.dev.billboard.com/get/billboard/billboard-programmatic?_embed=1&pgm:type=article&per_page=5",
           success: function (result) {
-            var items = $(result).find('item')
-                for (let item in items) {
-                    if (items[item].children[4] !== "" {
-                        feedimgs.push(items[item].children[4].innerHTML)
-                    }
-                    if (items[item].children[1] !== "") {
-                      titles.push(items[item].children[1].innerHTML)
-                  }
-                    if (items[item].children[3] !== "") {
-                        urls.push(items[item].children[3].innerHTML)
-                    }
-                }
-                console.log({feedimgs})
+            var items = $(result).find('item');
+            for (var i =0; i<5;i++) {
+              console.log(items[i])
+              var whatever = $(items[i]);
+              feedimgs.push(whatever.find('thumbnail')[0].innerHTML)
+              titles.push(whatever.find('title')[0].innerHTML)
+              urls.push(whatever.find('link')[0].innerHTML)
+
+            }
+                console.log({feedimgs});
+                console.log({titles});
+                console.log({urls});
+
             var adDiv = window.top.document.getElementById("m1_1"),
                 zlidesdiv = window.top.document.getElementsByClassName("zlides");
             if ( zlidesdiv.length == 0 ) {
@@ -377,39 +378,39 @@
                     window.top.document.getElementById("progress-3").classList.add("not-filled");
                     window.top.document.getElementById("progress-4").classList.add("not-filled");
                     topArticle.innerHTML = `1/5`
-                    titleDiv.innerHTML = '<span><a target="_blank" href="'+urls[0]+'">'+titles[0]+'</a></span>';
-                    readMoreDiv.innerHTML = '<a target="_blank" href="'+urls[0]+'">Read More >></a>'
+                    titleDiv.innerHTML = '<span><a target="_blank" href="'+urls[1]+'">'+titles[1]+'</a></span>';
+                    readMoreDiv.innerHTML = '<a target="_blank" href="'+urls[1]+'">Read More >></a>'
                 }
                 if(currentZlide == 1){
                     window.top.document.getElementById("progress-1").classList.remove("not-filled");
                     window.top.document.getElementById("pbar-0").classList.add('filled')    
                     topArticle.innerHTML = `2/5`
-                    titleDiv.innerHTML = '<span><a target="_blank" href="'+urls[1]+'">'+ titles[1]+'</a></span>';
-                    readMoreDiv.innerHTML = '<a target="_blank" href="'+urls[1]+'">Read More >></a>'
+                    titleDiv.innerHTML = '<span><a target="_blank" href="'+urls[2]+'">'+ titles[2]+'</a></span>';
+                    readMoreDiv.innerHTML = '<a target="_blank" href="'+urls[2]+'">Read More >></a>'
 
                 }
                 if(currentZlide == 2){
                     window.top.document.getElementById("progress-2").classList.remove("not-filled");
                     window.top.document.getElementById("pbar-1").classList.add('filled')    
                     topArticle.innerHTML = `3/5`
-                    titleDiv.innerHTML = '<span><a target="_blank" href="'+urls[2]+'">'+ titles[2]+'</a></span>';
-                    readMoreDiv.innerHTML = '<a target="_blank" href="'+urls[2]+'">Read More >></a>'
+                    titleDiv.innerHTML = '<span><a target="_blank" href="'+urls[3]+'">'+ titles[3]+'</a></span>';
+                    readMoreDiv.innerHTML = '<a target="_blank" href="'+urls[3]+'">Read More >></a>'
 
                 }                
                 if(currentZlide == 3){
                     window.top.document.getElementById("progress-3").classList.remove("not-filled");
                     window.top.document.getElementById("pbar-2").classList.add('filled')   
                     topArticle.innerHTML = `4/5`
-                    titleDiv.innerHTML = '<span><a target="_blank" href="'+urls[3]+'">'+ titles[3]+'</a></span>';
-                    readMoreDiv.innerHTML = '<a target="_blank" href="'+urls[3]+'">Read More >></a>'
+                    titleDiv.innerHTML = '<span><a target="_blank" href="'+urls[4]+'">'+ titles[4]+'</a></span>';
+                    readMoreDiv.innerHTML = '<a target="_blank" href="'+urls[4]+'">Read More >></a>'
 
                 }
                 if(currentZlide == 4){
                     window.top.document.getElementById("progress-4").classList.remove("not-filled");
                     window.top.document.getElementById("pbar-3").classList.add('filled')    
                     topArticle.innerHTML = `5/5`
-                    titleDiv.innerHTML = '<span><a target="_blank" href="'+urls[4]+'">'+ titles[4]+'</a></span>';
-                    readMoreDiv.innerHTML = '<a target="_blank" href="'+urls[4]+'">Read More >></a>'
+                    titleDiv.innerHTML = '<span><a target="_blank" href="'+urls[0]+'">'+ titles[0]+'</a></span>';
+                    readMoreDiv.innerHTML = '<a target="_blank" href="'+urls[0]+'">Read More >></a>'
 
                 }
               zlides[currentZlide].className = 'zlide';
