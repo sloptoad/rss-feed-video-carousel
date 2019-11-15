@@ -284,29 +284,27 @@
 }(window.top.document));
 
   window.top.document.head.appendChild(style);
-  var feedimgs = ["https://www.billboard.com/files/media/03-Post-Malone-press-by-Adam-Degross-2019-billboard-1548.jpg","https://www.billboard.com/files/media/04-Selena-Gomez-Lose-You-To-Love-Me-billboard-1548.jpg","https://www.billboard.com/files/media/Cole-Swindell-CMA-music-festival-portraits-cr-Eric-Ryan-Anderson-2017-billboard-1548.jpg","https://www.billboard.com/files/media/tones-and-i-2019-cr-elektra-records-billboard-1548.jpg","https://www.billboard.com/files/media/Super-Junior-press-photo-2019-billboard-1548.jpg"];
-    var titles = ["Five Burning Questions: Billboard Staffers Discuss Selena Gomez's Resounding 'Lose You to Love Me' Debut","Cole Swindell Swipes No. 1 Spot On Country Airplay Chart With 'Love You Too Late'","Stereophonics, Tones And I Lead U.K. Midweek Charts","Super Junior Return to Top 10 of World Albums Chart With 'Time_Slip'","Post Malone Rules Artist 100 For 11th Week, Selena Gomez Returns in Top 20"];
+  var feedimgs = [];
+    var titles = [];
     var firsttitle = "";
-    var urls = ["https://www.billboard.com/articles/business/chart-beat/8541300/selena-gomez-lose-you-to-love-me-five-burning-questions","https://www.billboard.com/articles/business/chart-beat/8541259/love-you-too-late-cole-swindell-tops-country-airplay","https://www.billboard.com/articles/business/chart-beat/8541210/stereophonics-tones-and-i-lead-uk-midweek-charts","https://www.billboard.com/articles/business/chart-beat/8541166/super-junior-time-slip-top-10-world-albums-chart","https://www.billboard.com/articles/business/chart-beat/8541485/selena-gomez-returns-artist-100-chart"]
+    var urls = []
           $.ajax({
             type: 'GET',
-            url: "http://517.syndication.dev.billboard.com/get/microsoft/microsoft-bb-news",
-            dataType: 'jsonp',
-            crossDomain: true,
-            headers: {"Access-Control-Allow-Origin": "*"},
-            success: function (result) {
-              console.log({result})
-                for (let item in result.items) {
-                    if (result.items[item].thumbnail !== "") {
-                        // feedimgs.push(result.items[item].thumbnail)
+            url: "https://syndication.dev.billboard.com/get/billboard/billboard-programmatic?_embed=1&pgm:type=article&per_page=5",
+          success: function (result) {
+            var items = $(result).find('item')
+                for (let item in items) {
+                    if (items[item].children[4] !== "" {
+                        feedimgs.push(items[item].children[4].innerHTML)
                     }
-                    if (result.items[item].title !== "") {
-                        // titles.push(result.items[item].title)
-                    }
-                    if (result.items[item].link !== "") {
-                      // urls.push(result.items[item].link)
+                    if (items[item].children[1] !== "") {
+                      titles.push(items[item].children[1].innerHTML)
                   }
+                    if (items[item].children[3] !== "") {
+                        urls.push(items[item].children[3].innerHTML)
+                    }
                 }
+                console.log({feedimgs})
             var adDiv = window.top.document.getElementById("m1_1"),
                 zlidesdiv = window.top.document.getElementsByClassName("zlides");
             if ( zlidesdiv.length == 0 ) {
@@ -454,6 +452,9 @@
               var player = window.top.document.getElementById("rss-video-ad");
           }
         }
+      },
+      error: function(error){
+        console.log({error})
       }
       })
 
