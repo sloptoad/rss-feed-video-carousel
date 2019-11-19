@@ -291,21 +291,25 @@
           $.ajax({
             type: 'GET',
             dataType: "xml",
-            url: "https://syndication.dev.billboard.com/get/billboard/billboard-programmatic?_embed=1&pgm:type=article&per_page=5",
+            url: "https://syndication.dev.billboard.com/get/billboard/billboard-programmatic",
           success: function (result) {
             var items = $(result).find('item');
-            for (var i =0; i<5;i++) {
+            var count =5;
+            for (var i =0; i<count;i++) {  
               console.log(items[i])
               var whatever = $(items[i]);
-              feedimgs.push(whatever.find('thumbnail')[0].innerHTML)
-              titles.push(whatever.find('title')[0].innerHTML)
-              urls.push(whatever.find('link')[0].innerHTML)
-
+              var htmlstring = whatever.find('thumbnail')[0].innerHTML;
+              console.log({htmlstring})
+              htmlstring = (htmlstring.trim) ? htmlstring.trim() : htmlstring.replace(/^\s+/,'');
+              if(htmlstring !== '            ↵↵          	') {
+                  console.log("in if");
+                  feedimgs.push(whatever.find('thumbnail')[0].innerHTML)
+                  titles.push(whatever.find('title')[0].innerHTML)
+                  urls.push(whatever.find('link')[0].innerHTML)
+                  count ++
+              }
             }
-                console.log({feedimgs});
-                console.log({titles});
-                console.log({urls});
-
+            console.log({feedimgs})
             var adDiv = window.top.document.getElementById("m1_1"),
                 zlidesdiv = window.top.document.getElementsByClassName("zlides");
             if ( zlidesdiv.length == 0 ) {
